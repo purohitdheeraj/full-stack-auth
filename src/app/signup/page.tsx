@@ -20,16 +20,28 @@ export default function Signup() {
     }))
   }
 
-  const handleSignup = (e) => {
+  const handleSignup = async(e) => {
     e.preventDefault()
     setProcessing(true)
-    console.log(userInfo)
-    setUserInfo(prev => ({
-      email: '',
-      password: '',
-      username: ''
-    }))
-    setProcessing(false)
+
+    try {
+      const res = await fetch('/api/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userInfo)
+      })
+
+      const data = await res.json()
+      console.log(data)
+
+    } catch (error:any) {
+      console.log('signup error', error)
+    } finally{
+      setProcessing(false)
+    }
+
   }
   return (
     <>

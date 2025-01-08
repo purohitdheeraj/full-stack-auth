@@ -36,6 +36,10 @@ export default function Signup() {
       const data = await res.json()
       console.log(data)
 
+      if(res.ok){
+        router.push('/login')
+      }
+
     } catch (error:any) {
       console.log('signup error', error)
     } finally{

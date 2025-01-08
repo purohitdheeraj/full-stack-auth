@@ -19,20 +19,41 @@ export default function Login() {
     }))
   }
 
-  const handleLogin = (e) => {
+  const handleLogin = async(e) => {
     e.preventDefault()
     console.log(userInfo)
 
-    // make a api call login
-    // if success
-    // setProcessing(true)
-    // router.push('/dashboard')
+    try {
+      setProcessing(true)
+      const res = await fetch('/api/login',{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userInfo)
+      })
+
+      const data = await res.json()
+      console.log(data)
+
+      if(res.ok){
+        router.push('/')
+      }
+
+    } catch (error) {
+      console.log('login error', error)
+    }finally{
+      setProcessing(false)
+    }
+
   }
   return (
     <>
       <div className="grid place-items-center gap-2 h-[100vh]">
         <div className="flex flex-col gap-4">
-        <h2 className="mx-auto">Login Page</h2>
+        <h2 className="mx-auto">
+          {processing ? 'Processing' : 'Login Page'}
+        </h2>
          
           <label htmlFor="email">Email</label>
           <input type="email" onChange={handleChange} className="border px-2 py-1" value={userInfo.email} id="email" name="email" />

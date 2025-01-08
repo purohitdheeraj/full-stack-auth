@@ -37,7 +37,7 @@ export default function Login() {
       console.log(data)
 
       if(res.ok){
-        router.push('/')
+        router.push('/profile')
       }
 
     } catch (error) {
